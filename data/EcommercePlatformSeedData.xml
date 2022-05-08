@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This software is in the public domain under CC0 1.0 Universal plus a 
+Grant of Patent License.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
+<entity-facade-xml type="seed">
+
+    <!-- Configuration send email -->
+    <!--moqui.basic.email.EmailServer emailServerId="SYSTEM"
+            smtpHost="smtp.gmail.com" smtpPort="587" smtpStartTls="Y" smtpSsl="N"
+            storeHost="imap.gmail.com" storePort="993" storeProtocol="imaps" storeFolder=""
+            storeDelete="N" storeMarkSeen="Y" storeSkipSeen="Y" mailUsername="mobile@growerp.com" mailPassword="xxxxxxx"/-->
+
+     <!-- allocate companies to application -->
+    <moqui.basic.Enumeration description="Mobile App Name used by company" enumId="PcltMobileApp" enumTypeId="PartyClassificationType"/>
+    <mantle.party.PartyClassification partyClassificationId="AppAdmin" classificationTypeEnumId="PcltMobileApp" description="Admin app to maintain backoffice data, products, categories, orders"/>
+    <mantle.party.PartyClassification partyClassificationId="AppRestaurant" classificationTypeEnumId="PcltMobileApp" description="App for restaurant,cafe,bar"/>
+    <mantle.party.PartyClassification partyClassificationId="AppPOS" classificationTypeEnumId="PcltMobileApp" description="Point of sale APP"/>
+    <mantle.party.PartyClassification partyClassificationId="AppEcommerceShop" classificationTypeEnumId="PcltMobileApp" description="App for Ecommerce and shop"/>
+    <mantle.party.PartyClassification partyClassificationId="AppHospital" classificationTypeEnumId="PcltMobileApp" description="App for Hospital/Clinic/Dentist/Doctor/Beauty Shop"/>
+    <mantle.party.PartyClassification partyClassificationId="AppService" classificationTypeEnumId="PcltMobileApp" description="App for Service company, freelancer, wfh"/>
+    <mantle.party.PartyClassification partyClassificationId="AppHotel" classificationTypeEnumId="PcltMobileApp" description="App for Hotel, Bed &amp; Breakfeast"/>
+    <mantle.party.PartyClassification partyClassificationId="AppRealtor" classificationTypeEnumId="PcltMobileApp" description="App for Realtor/property management"/>
+    <mantle.party.PartyClassification partyClassificationId="AppFreelance" classificationTypeEnumId="PcltMobileApp" description="App for a freelancer"/>
+
+    <!-- sales opportunity stage -->
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Prospecting" sequenceNum="1"/>
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Qualification" sequenceNum="2"/>
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Demo/Meeting" sequenceNum="3"/>
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Proposal" sequenceNum="4"/>
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Quote" sequenceNum="5"/>
+    <mantle.sales.opportunity.SalesOpportunityStage opportunityStageId="Deleted" sequenceNum="5"/>
+    <!-- added thumbnail image size for party -->
+    <moqui.basic.Enumeration description="Logo Image Thump Nail"  enumId="PcntLogoThumbImage" enumTypeId="PartyContentType"/>
+    <moqui.basic.Enumeration description="Face Image Thump Nail"  enumId="PcntFaceThumbImage" enumTypeId="PartyContentType"/>
+    
+    <!-- added images for category -->
+    <moqui.basic.Enumeration description="Category Image Thumb Nail" enumId="PcctImageThumbNail" enumTypeId="ProductCategoryContentType"/>
+    <moqui.basic.Enumeration description="Category Image Medium Size" enumId="PcctImageMedium" enumTypeId="ProductCategoryContentType"/>
+    <moqui.basic.Enumeration description="Category Image Large Size" enumId="PcctImageLarge" enumTypeId="ProductCategoryContentType"/>
+
+    <!-- define a top level category type for a restaurant menu -->
+    <moqui.basic.Enumeration enumId="PctRoot" description="Root category" enumTypeId="ProductCategoryType"/>
+    <moqui.basic.Enumeration enumId="PctRestaurant" description="Menu for Restauarant" enumTypeId="ProductCategoryType"/><!-- depreciated -->
+
+    <!-- hotel room reservation new product type: no shipment -->
+    <moqui.basic.Enumeration description="Fixed Asset Use" enumId="PtFixedAssetUse" enumTypeId="ProductType"/>
+
+    <!-- additional roles -->
+    <!-- ordertaker is also stored in the field enteredByPartyId in orderheader -->
+    <mantle.party.RoleType description="Added more after initial entry of the order" roleTypeId="OrderTakeMore"/><!--  when entered as an update -->
+    <mantle.party.RoleType description="Prepared part of the order" roleTypeId="OrderPrepare"/>
+    <mantle.party.RoleType description="Served part of the order" roleTypeId="OrderServe"/>
+    <!-- Cashier used for billing -->
+
+    <!-- order to facilitate a contact person for the 'other' company -->
+    <mantle.party.RoleType description="Vendor Contact Person" roleTypeId="VendorContactPerson"/>
+    <mantle.party.RoleType description="Customer Contact Person" roleTypeId="CustomerContactPerson"/>
+
+    <!-- email templates -->
+    <!-- EmailTemplate for general notifications -->
+    <moqui.basic.email.EmailTemplate emailTemplateId="NOTIFICATION" description="Default Notification" emailServerId="SYSTEM"
+        emailTypeEnumId="EMT_NOTIFICATION" bodyScreenLocation="classpath://screen/NotificationEmail.xml" webappName="webroot"
+        fromAddress="support@growerp.com" fromName="GrowERP system" ccAddresses="" bccAddresses="" subject="${title}" sendPartial="Y"/>
+    <!-- EmailTemplate for password reset email -->
+    <moqui.basic.email.EmailTemplate emailTemplateId="PASSWORD_RESET" description="Default Password Reset" 
+        emailServerId="SYSTEM" emailTypeEnumId="EMT_PWD_RESET" 
+        bodyScreenLocation="component://growerp/screen/email/PasswordReset.xml"
+        fromAddress="support@growerp.org" ccAddresses="" bccAddresses="" subject="Password Reset" sendPartial="Y"/>
+    <moqui.basic.email.EmailTemplate emailTemplateId="WELCOME" description="Welcome email with Password" 
+        emailServerId="SYSTEM" emailTypeEnumId="EMT_SYSTEM" 
+        bodyScreenLocation="component://growerp/screen/email/Welcome.xml"
+        fromAddress="support@growerp.org" fromName="GrowERP system" ccAddresses="" bccAddresses="support@growerp.org" subject="Welcome and Password!" sendPartial="Y"/>
+    <!-- export -->
+    <moqui.basic.email.EmailTemplate emailTemplateId="GrowerpExportOrders" description="GrowERP orders export Order"
+            emailServerId="SYSTEM" webappName="webroot"
+            fromAddress="noreply@growerp.com" fromName="Support GrowERP" sendPartial="Y"
+            subject="Export Orders CSV file"
+            bodyScreenLocation="component://growerp/screen/email/OrdersExportBody.xml">
+        <attachments fileName="order.csv"
+                attachmentLocation="component://growerp/screen/email/OrdersExport.xml"
+                screenRenderMode="text"/>
+    </moqui.basic.email.EmailTemplate>
+    <moqui.basic.email.EmailTemplate emailTemplateId="GrowerpExportCustomers" description="GrowERP export Customers"
+            emailServerId="SYSTEM" webappName="webroot"
+            fromAddress="noreply@growerp.com" fromName="Support GrowERP" sendPartial="Y"
+            subject="Export Customers CSV file"
+            bodyScreenLocation="component://growerp/screen/email/CustomersExportBody.xml">
+        <attachments fileName="customer.csv"
+                attachmentLocation="component://growerp/screen/email/CustomersExport.xml"
+                screenRenderMode="text"/>
+    </moqui.basic.email.EmailTemplate>
+    <moqui.basic.email.EmailTemplate emailTemplateId="GrowerpExportCatgsProducts"
+            description="GrowERP export Categories and Products"
+            emailServerId="SYSTEM" webappName="webroot"
+            fromAddress="noreply@growerp.com" fromName="Support GrowERP" sendPartial="Y"
+            subject="Export Categories and products file"
+            bodyScreenLocation="component://growerp/screen/email/CatgsProductsExportBody.xml">
+        <attachments fileName="CatgsProducts.csv"
+                attachmentLocation="component://growerp/screen/email/CatgsProductsExport.xml"
+                screenRenderMode="text"/>
+    </moqui.basic.email.EmailTemplate>
+    <!-- Paypal account -->
+    <!--mantle.account.method.PaymentGatewayConfig paymentGatewayConfigId="PaypalDemo"/>
+    <mantle.account.method.PaymentMethod PaymentMethodId="PayPalDemo" paymentMethodTypeEnumId="PmtPayPalAccount"
+            paymentGatewayConfigId="PaypalDemo"/-->
+
+    <!-- ========== Scheduled ServiceJob Data ========== -->
+    <!-- Handy cron strings: [0 0 2 * * ?] every night at 2:00 am, [0 0/15 * * * ?] every 15 minutes, [0 0/2 * * * ?] every 2 minutes -->
+
+    <!--moqui.service.job.ServiceJob jobName="send_regular_mail_daily" description="send regular email to existing users"
+            serviceName="growerp.mobile.ScheduledJobs.sendRegular#Email" cronExpression="0 0 2 * * ?" paused="N">
+        <parameters parameterName="daysToKeep" parameterValue="90"/>
+    </moqui.service.job.ServiceJob>
+
+    <moqui.service.job.ServiceJob jobName="deactivate_inactive_users_daily" description="scan/remove active users for not using the system"
+            serviceName="growerp.mobile.ScheduledJobs.deActivate#InactiveUsers" cronExpression="0 0 3 * * ?" paused="N">
+        <parameters parameterName="daysToKeep" parameterValue="90"/>
+    </moqui.service.job.ServiceJob-->
+
+    <!-- update seed data -->
+    <!--<growerp.InstallServices.deleteAssetClass/> existing classes used in accounting -->
+    <moqui.basic.Enumeration description="Hotel Room" enumId="AsClsRoom" enumTypeId="AssetClass"/>
+    <moqui.basic.Enumeration description="Restaurant Table" enumId="AsClsTable" enumTypeId="AssetClass"/>
+    <moqui.basic.Enumeration description="Restaurant Table Area" enumId="AsClsTableArea" enumTypeId="AssetClass"/>
+
+</entity-facade-xml>
